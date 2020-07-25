@@ -1,0 +1,3 @@
+= docker-b25
+
+https://medium.com/chinachu/c98v-mirakc-cde04fb67531[できるmirakc] の *TSDサーバー* をほぼ丸パクリしたものです。詳しくは訊かないでください。
