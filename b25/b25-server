@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -e
+
+rm -rf /var/run/pcscd
+mkdir -p /var/run/pcscd
+
+exec supervisord
