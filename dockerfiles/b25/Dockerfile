@@ -1,51 +1,25 @@
-FROM alpine:3.12
+FROM debian:bookworm-slim
 
+WORKDIR /app
 RUN : \
-    && set -eux \
-    && apk add --no-cache \
-        ccid \
-        musl \
-        pcsc-lite-libs \
-        socat \
-        tzdata \
-        supervisor \
-    && : \
-    && mv /etc/supervisord.conf /etc/supervisord.bak.conf \
-    && printf '\
-[supervisord]\n\
-nodaemon=true\n\
-user=root\n\
-\n\
-[program:b25]\n\
-command=/usr/bin/socat unix-listen:/var/run/pcscd/pcscd.comm,fork tcp-connect:bcas:40774\n\
-stderr_logfile=/dev/stderr\n\
-stderr_logfile_maxbytes=0\n\
-\n\
-[program:tcp-listener]\n\
-command=/usr/bin/socat tcp-listen:40773,fork,reuseaddr system:b25\n\
-stderr_logfile=/dev/stderr\n\
-stderr_logfile_maxbytes=0\n\
-' > /etc/supervisord.conf \
-    && : \
-    && apk add --no-cache --virtual .build-deps \
-        gcc \
-        g++\
-        make \
-        musl-dev \
-        nodejs \
-        npm \
-        pcsc-lite-dev \
-        pkgconf \
-    && : \
-    && (cd /tmp; npm i arib-b25-stream-test) \
-    && cp /tmp/node_modules/.bin/arib-b25-stream-test /usr/local/bin/b25 \
-    && : \
+    && set -x \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends supervisor socat ca-certificates wget \
+    \
+    # recisdb
+    && wget https://github.com/kazuki0824/recisdb-rs/releases/download/1.2.1/recisdb_1.2.1-1_$(dpkg --print-architecture).deb \
+    && apt-get install -y ./recisdb_1.2.1-1_$(dpkg --print-architecture).deb \
+    \
     # cleanup
-    && apk del --purge .build-deps \
+    && rm recisdb_1.2.1-1_$(dpkg --print-architecture).deb \
+    && apt-get remove -y ca-certificates wget \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
     && :
-
-COPY b25-server /usr/local/bin/
+COPY supervisord.conf .
+COPY b25-server .
 
 EXPOSE 40773
-ENTRYPOINT ["b25-server"]
+ENTRYPOINT ["/app/b25-server"]

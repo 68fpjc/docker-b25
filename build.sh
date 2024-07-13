@@ -1,6 +1,7 @@
 #! /bin/bash
 
-docker build --tag 68fpjc/b25:2021-01-23 --tag 68fpjc/b25:latest \
-"$(dirname $0)"/dockerfiles/b25/
-docker build --tag 68fpjc/bcas:2021-01-23 --tag 68fpjc/bcas:latest \
-"$(dirname $0)"/dockerfiles/bcas/
+[ -z "${BUILDCMD}" ] && BUILDCMD="docker build"
+${BUILDCMD} "$(dirname $0)"/dockerfiles/b25/ --tag 68fpjc/b25:2024-07-13 \
+&& docker image tag 68fpjc/b25:2024-07-13 68fpjc/b25
+${BUILDCMD} "$(dirname $0)"/dockerfiles/bcas/ --tag 68fpjc/bcas:2021-01-23 \
+&& docker image tag 68fpjc/bcas:2021-01-23 68fpjc/bcas
