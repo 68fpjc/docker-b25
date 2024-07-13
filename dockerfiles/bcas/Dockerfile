@@ -18,9 +18,13 @@ user=root\n\
 \n\
 [program:pcscd1]\n\
 command=/usr/sbin/pcscd --foreground\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
 \n\
 [program:socat2]\n\
 command=/usr/bin/socat tcp-listen:40774,fork,reuseaddr unix-connect:/var/run/pcscd/pcscd.comm\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
 ' > /etc/supervisord.conf \
     && :
 

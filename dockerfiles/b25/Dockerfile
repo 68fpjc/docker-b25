@@ -18,9 +18,13 @@ user=root\n\
 \n\
 [program:pcscd]\n\
 command=/usr/bin/socat unix-listen:/var/run/pcscd/pcscd.comm,fork tcp-connect:bcas:40774\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
 \n\
 [program:socat]\n\
 command=/usr/bin/socat tcp-listen:40773,fork,reuseaddr system:b25\n\
+stderr_logfile=/dev/stderr\n\
+stderr_logfile_maxbytes=0\n\
 ' > /etc/supervisord.conf \
     && : \
     && apk add --no-cache --virtual .build-deps \
