@@ -4,7 +4,9 @@ WORKDIR /app
 RUN : \
     && set -x \
     && apt-get update \
-    && apt-get install -y --no-install-recommends supervisor socat ca-certificates wget \
+    && apt-get install -y --no-install-recommends \
+    supervisor socat pcscd \
+    ca-certificates wget \
     \
     # recisdb
     && wget https://github.com/kazuki0824/recisdb-rs/releases/download/1.2.1/recisdb_1.2.1-1_$(dpkg --print-architecture).deb \

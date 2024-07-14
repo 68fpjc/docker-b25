@@ -1,3 +1,14 @@
 = docker-b25
 
 https://medium.com/chinachu/c98v-mirakc-cde04fb67531[できるmirakc] の *TSDサーバー* をほぼ丸パクリしたものです。詳しくは訊かないでください。
+
+[source,sh]
+----
+docker run --detach --restart=unless-stopped \
+--env TZ=Asia/Tokyo \
+--mount type=bind,src=/etc/localtime,dst=/etc/localtime,readonly \
+--device=/dev/bus/usb \
+--publish=40773:40773 \
+--name b25 \
+68fpjc/b25
+----
