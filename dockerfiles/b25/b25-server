@@ -5,4 +5,4 @@ set -e
 rm -rf /var/run/pcscd
 mkdir -p /var/run/pcscd
 
-exec supervisord
+exec supervisord --configuration /app/supervisord.conf
