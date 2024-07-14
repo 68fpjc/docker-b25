@@ -1,6 +1,6 @@
 = docker-b25
 
-https://medium.com/chinachu/c98v-mirakc-cde04fb67531[できるmirakc] の *TSDサーバー* をほぼ丸パクリしたものです。詳しくは訊かないでください。
+https://mirakc.github.io/dekiru-mirakc/stable/tsd_server.html[できる mirakc の tsd サーバー] をほぼ丸パクリしたものです。詳しくは訊かないでください。
 
 [source,sh]
 ----
