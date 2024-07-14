@@ -20,8 +20,7 @@ RUN : \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
     && :
-COPY supervisord.conf .
-COPY b25-server .
+COPY ["supervisord.conf", "b25-server", "./"]
 
 EXPOSE 40773
 ENTRYPOINT ["/app/b25-server"]
